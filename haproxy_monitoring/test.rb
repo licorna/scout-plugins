@@ -137,4 +137,16 @@ class HaProxyTest < Test::Unit::TestCase
     assert res[:errors].empty?
     assert res[:memory].any?
   end
+
+  def test_should_count_http_status_code
+    uri_no_auth = "http://example.com/secret"
+    uri = "http://user:pass@example.com/secret"
+    FakeWeb.register_uri(:get, uri_no_auth, :body => "Unauthorized", :status => ["401", "Unauthorized"])
+    FakeWeb.register_uri(:get, uri, :body => File.read(File.dirname(__FILE__)+'/fixtures/status_codes.csv'))
+    
+    @plugin=HaproxyMonitoring.new(nil,{},{:uri=>uri_no_auth, :user => 'user', :password => 'pass', :proxy => 'rails'})
+    res = @plugin.run()
+    assert res[:errors].empty?
+    assert res[:memory].any?
+  end
 end

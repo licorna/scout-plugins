@@ -66,6 +66,35 @@ class HaproxyMonitoring < Scout::Plugin
         report(:active_servers => row['act']) if row['act']
         report(:backup_servers => row['bck']) if row['bck']
 
+        hrsp_1xx = row['hrsp_1xx'].to_i if row['hrsp_1xx'] || 0
+        hrsp_2xx = row['hrsp_2xx'].to_i if row['hrsp_2xx'] || 0
+        hrsp_3xx = row['hrsp_3xx'].to_i if row['hrsp_3xx'] || 0
+        hrsp_4xx = row['hrsp_4xx'].to_i if row['hrsp_4xx'] || 0
+        hrsp_5xx = row['hrsp_5xx'].to_i if row['hrsp_5xx'] || 0
+        hrsp_other = row['hrsp_other'].to_i if row['hrsp_other'] || 0
+
+        report(:hrsp_1xx => hrsp_1xx)
+        report(:hrsp_2xx => hrsp_2xx)
+        report(:hrsp_3xx => hrsp_3xx)
+        report(:hrsp_4xx => hrsp_4xx)
+        report(:hrsp_5xx => hrsp_5xx)
+        report(:hrsp_other => hrsp_other)
+
+        total = hrsp_1xx + hrsp_2xx + hrsp_3xx + hrsp_4xx + hrsp_5xx + hrsp_other
+        hrsp_1xx_percent = hrsp_1xx / total.to_f
+        hrsp_2xx_percent = hrsp_2xx / total.to_f
+        hrsp_3xx_percent = hrsp_3xx / total.to_f
+        hrsp_4xx_percent = hrsp_4xx / total.to_f
+        hrsp_5xx_percent = hrsp_5xx / total.to_f
+        hrsp_other_percent = hrsp_other / total.to_f
+
+        report(:hrsp_1xx_ratio => hrsp_1xx_percent)
+        report(:hrsp_2xx_ratio => hrsp_2xx_percent)
+        report(:hrsp_3xx_ratio => hrsp_3xx_percent)
+        report(:hrsp_4xx_ratio => hrsp_4xx_percent)
+        report(:hrsp_5xx_ratio => hrsp_5xx_percent)
+        report(:hrsp_other_ratio => hrsp_other_percent)
+
         report(:proxy_up=>%w(UP OPEN).find {|s| s == row['status']} ? 1 : 0)
       end # FasterCSV.parse
     rescue OpenURI::HTTPError
