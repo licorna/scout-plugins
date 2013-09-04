@@ -41,3 +41,51 @@ metadata:
     label: Servers (Backup)
     units: servers
     precision: 0
+  hrsp_1xx:
+    label: HTTP Status Code 1xx
+    units: responses
+    precision: 1
+  hrsp_2xx:
+    label: HTTP Status Code 2xx
+    units: responses
+    precision: 1
+  hrsp_3xx:
+    label: HTTP Status Code 3xx
+    units: responses
+    precision: 1
+  hrsp_4xx:
+    label: HTTP Status Code 4xx
+    units: responses
+    precision: 1
+  hrsp_5xx:
+    label: HTTP Status Code 5xx
+    units: responses
+    precision: 1
+  hrsp_other:
+    label: HTTP Status Code Other
+    units: responses
+    precision: 1
+  hrsp_1xx_ratio:
+    label: HTTP Status Code 1xx_ratio
+    units: responses
+    precision: 1
+  hrsp_2xx_ratio:
+    label: HTTP Status Code 2xx_ratio
+    units: responses
+    precision: 1
+  hrsp_3xx_ratio:
+    label: HTTP Status Code 3xx_ratio
+    units: responses
+    precision: 1
+  hrsp_4xx_ratio:
+    label: HTTP Status Code 4xx_ratio
+    units: responses
+    precision: 1
+  hrsp_5xx_ratio:
+    label: HTTP Status Code 5xx_ratio
+    units: responses
+    precision: 1
+  hrsp_other_ratio:
+    label: HTTP Status Code Other_ratio
+    units: responses
+    precision: 1
