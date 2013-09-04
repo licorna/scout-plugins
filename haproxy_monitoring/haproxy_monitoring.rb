@@ -73,12 +73,12 @@ class HaproxyMonitoring < Scout::Plugin
         hrsp_5xx = row['hrsp_5xx'].to_i if row['hrsp_5xx'] || 0
         hrsp_other = row['hrsp_other'].to_i if row['hrsp_other'] || 0
 
-        report(:hrsp_1xx => hrsp_1xx)
-        report(:hrsp_2xx => hrsp_2xx)
-        report(:hrsp_3xx => hrsp_3xx)
-        report(:hrsp_4xx => hrsp_4xx)
-        report(:hrsp_5xx => hrsp_5xx)
-        report(:hrsp_other => hrsp_other)
+        counter('hrsp_1xx', hrsp_1xx, :per => :minute)
+        counter('hrsp_2xx', hrsp_2xx, :per => :minute)
+        counter('hrsp_3xx', hrsp_3xx, :per => :minute)
+        counter('hrsp_4xx', hrsp_4xx, :per => :minute)
+        counter('hrsp_5xx', hrsp_5xx, :per => :minute)
+        counter('hrsp_other', hrsp_other, :per => :minute)
 
         total = hrsp_1xx + hrsp_2xx + hrsp_3xx + hrsp_4xx + hrsp_5xx + hrsp_other
         hrsp_1xx_percent = hrsp_1xx / total.to_f
@@ -88,12 +88,12 @@ class HaproxyMonitoring < Scout::Plugin
         hrsp_5xx_percent = hrsp_5xx / total.to_f
         hrsp_other_percent = hrsp_other / total.to_f
 
-        report(:hrsp_1xx_ratio => hrsp_1xx_percent)
-        report(:hrsp_2xx_ratio => hrsp_2xx_percent)
-        report(:hrsp_3xx_ratio => hrsp_3xx_percent)
-        report(:hrsp_4xx_ratio => hrsp_4xx_percent)
-        report(:hrsp_5xx_ratio => hrsp_5xx_percent)
-        report(:hrsp_other_ratio => hrsp_other_percent)
+        counter('hrsp_1xx_ratio', hrsp_1xx_percent, :per => :minute)
+        counter('hrsp_2xx_ratio', hrsp_2xx_percent, :per => :minute)
+        counter('hrsp_3xx_ratio', hrsp_3xx_percent, :per => :minute)
+        counter('hrsp_4xx_ratio', hrsp_4xx_percent, :per => :minute)
+        counter('hrsp_5xx_ratio', hrsp_5xx_percent, :per => :minute)
+        counter('hrsp_other_ratio', hrsp_other_percent, :per => :minute)
 
         report(:proxy_up=>%w(UP OPEN).find {|s| s == row['status']} ? 1 : 0)
       end # FasterCSV.parse
